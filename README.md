@@ -1,91 +1,88 @@
-﻿# Sistema Bancario em POO (Python)
+﻿# Sistema Bancário em Python (POO + FastAPI)
 
-Projeto desenvolvido no **bootcamp DIO | Luizalabs - Back-end com Python - 2ª Edicao**.
+Projeto desenvolvido no **bootcamp DIO | LuizaLabs - Back-end com Python - 2ª Edição**.
 
-Repositorio de estudo e evolucao de um sistema bancario no terminal, modelado com Programacao Orientada a Objetos (POO).
+Repositório de estudo e evolução de um sistema bancário em duas abordagens:
 
-## Sobre o projeto
-
-Este projeto implementa operacoes bancarias basicas com foco em boas praticas de modelagem:
-
-- cadastro de clientes (`PessoaFisica`)
-- criacao de contas (`ContaCorrente`)
-- deposito
-- saque com regras de limite
-- extrato com historico de transacoes
-
-A aplicacao roda via CLI (terminal) e foi estruturada para facilitar manutencao e expansao de funcionalidades.
-
-## Contexto academico
-
-Desafio pratico do bootcamp **DIO | Luizalabs - Back-end com Python - 2ª Edicao**, com foco em:
-
-- fundamentos de Python
-- modelagem orientada a objetos
-- regras de negocio bancarias
-- evolucao de codigo procedural para POO
-
-## Status
-
-Em desenvolvimento ativo.
+- aplicação CLI orientada a objetos
+- API bancária assíncrona com FastAPI e JWT
 
 ## Tecnologias
 
 - Python 3.x
-- Programacao Orientada a Objetos
+- FastAPI
+- SQLAlchemy Async
+- SQLite (aiosqlite)
+- JWT (`python-jose`)
+- Passlib (`pbkdf2_sha256`)
 
-## Estrutura do repositorio
+## Estrutura do repositório
 
-- [`banco_poo.py`](./banco_poo.py): implementacao principal do sistema
-- [`.gitignore`](./.gitignore): regras de ignorar arquivos locais e de ambiente
+- `banco_poo.py`: implementação original em CLI (POO)
+- `app/main.py`: entrada da API FastAPI
+- `app/api/routes/`: rotas (`auth`, `accounts`, `transactions`)
+- `app/services/`: regras de negócio
+- `app/models/`: modelos ORM (`User`, `Account`, `Transaction`)
+- `app/schemas/`: contratos de request/response
+- `requirements.txt`: dependências da API
 
-## Modelo de dominio (UML)
+## Regras de negócio da API
 
-Classes principais aplicadas:
+- Depósitos e saques devem ter valor maior que zero.
+- Saque exige saldo suficiente.
+- Saque respeita limite por operação da conta.
+- Saque respeita limite de quantidade por conta (`limite_saques`).
+- Conta corrente é vinculada ao usuário autenticado.
 
-- `Cliente`
-- `PessoaFisica`
-- `Conta`
-- `ContaCorrente`
-- `Historico`
-- `Transacao` (abstrata)
-- `Deposito`
-- `Saque`
+## Como executar a API
 
-## Como executar
-
-### 1) Clonar o repositorio
+### 1) Instalar dependências
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
-cd Luizalabs-Back-end
+pip install -r requirements.txt
 ```
 
-### 2) Executar a aplicacao
+### 2) Subir servidor
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### 3) Acessar documentação OpenAPI
+
+- Swagger UI: `http://127.0.0.1:8000/docs`
+- ReDoc: `http://127.0.0.1:8000/redoc`
+
+## Fluxo de autenticação JWT
+
+1. `POST /auth/register` para cadastrar usuário.
+2. `POST /auth/login` para obter `access_token`.
+3. No Swagger, clicar em **Authorize** e informar:
+
+```text
+Bearer <seu_token>
+```
+
+4. Consumir endpoints protegidos.
+
+## Endpoints principais
+
+- `POST /auth/register`
+- `POST /auth/login`
+- `POST /accounts`
+- `GET /accounts`
+- `GET /accounts/{account_id}`
+- `POST /accounts/{account_id}/transactions`
+- `GET /accounts/{account_id}/statement`
+- `GET /health`
+
+## Como executar o modo CLI (POO)
 
 ```bash
 python banco_poo.py
 ```
 
-## Funcionalidades atuais
-
-- [x] Criar usuario
-- [x] Criar conta corrente
-- [x] Depositar
-- [x] Sacar com limite por operacao
-- [x] Limite diario de saques
-- [x] Exibir extrato
-- [x] Listar contas
-
-## Proximos passos
-
-- [ ] Persistencia em banco de dados (SQLite/PostgreSQL)
-- [ ] Testes automatizados (pytest)
-- [ ] Separacao em modulos (`models`, `services`, `main`)
-- [ ] Camada de autenticacao basica
-
 ## Autor
 
 - Nome: `Gabriel Resende Meireles`
 - LinkedIn: `https://www.linkedin.com/in/Gabrimeireles`
-- Email: `seu-email@dominio.com`

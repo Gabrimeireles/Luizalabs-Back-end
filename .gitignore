@@ -35,3 +35,5 @@ htmlcov/
 # IDE/editor
 .vscode/
 .idea/
+# SQLite local database
+banco_api.db
