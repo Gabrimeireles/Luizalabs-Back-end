@@ -1,5 +1,8 @@
 ﻿# Sistema Bancário em Python (POO + FastAPI)
 
+![Cobertura](https://img.shields.io/badge/cobertura-96%25-brightgreen)
+![Testes](https://img.shields.io/badge/testes-25%20passed-success)
+
 Projeto desenvolvido no **bootcamp DIO | LuizaLabs - Back-end com Python - 2ª Edição**.
 
 Repositório de estudo e evolução de um sistema bancário em duas abordagens:
