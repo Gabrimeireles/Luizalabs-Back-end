@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ### 2) Subir servidor
 
 ```bash
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
 ```
 
 ### 3) Acessar documentação OpenAPI
@@ -75,6 +75,31 @@ Bearer <seu_token>
 - `POST /accounts/{account_id}/transactions`
 - `GET /accounts/{account_id}/statement`
 - `GET /health`
+
+## Testes automatizados
+
+### 1) Instalar dependências de desenvolvimento
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+### 2) Executar testes
+
+```bash
+python -m pytest
+```
+
+### 3) Executar testes com cobertura
+
+```bash
+python -m pytest --cov=app --cov-report=term-missing --cov-report=xml
+```
+
+Cobertura atual da API:
+
+- **96%** de cobertura total (`TOTAL 303 stmts / 12 miss`)
+- **25 testes** automatizados passando
 
 ## Como executar o modo CLI (POO)
 
